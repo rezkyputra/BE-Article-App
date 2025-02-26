@@ -21,4 +21,8 @@ export class ArticleService {
         return this.article
     }
 
+    findOneByParams(id: string): IArticle | undefined {
+        return this.article.find(item => item.id === id)
+    }
+
 }
