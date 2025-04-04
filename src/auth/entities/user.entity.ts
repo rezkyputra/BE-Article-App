@@ -1,5 +1,6 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Role } from "../enum/role.enum";
+import { Profile } from "src/profile/entities/profile.entity";
 
 @Entity()
 export class User {
@@ -21,6 +22,9 @@ export class User {
         default: Role.USER
     })
     role: Role
+
+    // @OneToOne(() => Profile, (profile) => profile.user)
+    // profile: Profile
 
     @CreateDateColumn()
     createdAt: Date
