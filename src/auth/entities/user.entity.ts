@@ -23,8 +23,8 @@ export class User {
     })
     role: Role
 
-    // @OneToOne(() => Profile, (profile) => profile.user)
-    // profile: Profile
+    @OneToOne(() => Profile, (profile) => profile.user)
+    profile: Profile
 
     @CreateDateColumn()
     createdAt: Date
