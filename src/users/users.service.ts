@@ -13,10 +13,16 @@ export class UsersService {
 
     async findAllUser(): Promise<User[]> {
         const user = await this.userRepository.find({
+            relations: ['profile'],
             select: {
                 id: true,
                 name: true,
                 email: true,
+                role: true,
+                profile: {
+                    age: true,
+                    bio: true
+                }
             }
         })
         return user

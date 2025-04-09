@@ -30,12 +30,31 @@ export class ProfileService {
             }
         } else {
             // Tambah Profile
-            const newProfile = this.profileRepository.create(createorUpdateProfileDto)
+            const newProfile = await this.profileRepository.create(createorUpdateProfileDto)
             newProfile.user = user
             await this.profileRepository.save(newProfile)
             return {
                 message: "Berhasil buat Profile"
             }
         }
+    }
+
+    async getUserProfileByToken(userId: string): Promise<User | null> {
+        const userProfile = await this.userRepository.findOne(
+            {
+                where: { id: userId },
+                relations: ['profile'],
+                select: {
+                    id: true,
+                    name: true,
+                    email: true,
+                    role: true,
+                    profile: {
+                        age: true,
+                        bio: true,
+                    }
+                }
+            })
+        return userProfile
     }
 }
