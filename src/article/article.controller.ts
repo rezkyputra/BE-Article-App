@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, NotFoundException, Param, Post, Put, Request, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, NotFoundException, Param, Post, Put, Query, Request, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { ArticleService } from './article.service';
 import { createArticleDto } from './dto/create-article.dto';
 import { IArticle } from './interface/article.interface';
@@ -10,6 +10,7 @@ import { RolesGuard } from 'src/auth/guard/role.guard';
 import { Roles } from 'src/auth/decolators/roles.decolator';
 import { Role } from 'src/auth/enum/role.enum';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { ArticleQueryDto } from './dto/article-query.dto';
 
 @Controller('article')
 export class ArticleController {
@@ -18,8 +19,8 @@ export class ArticleController {
     }
 
     @Get()
-    async findAll(): Promise<Article[]> {
-        return await this.articleService.findAllArticle();
+    async findAll(@Query() query: ArticleQueryDto) {
+        return await this.articleService.findAllArticle(query);
     }
 
     @Get("/:id")

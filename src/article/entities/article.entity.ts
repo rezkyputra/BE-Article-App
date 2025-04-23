@@ -1,7 +1,8 @@
-import { ManyToOne, Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { ManyToOne, Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from "typeorm";
 import { ArticleStatus } from "../interface/article.interface";
 import { Category } from "../../category/entities/category.entity";
 import { User } from "../../auth/entities/user.entity";
+import { ArticleTag } from "../../articletag/entities/articletag.entity";
 
 @Entity()
 export class Article {
@@ -43,6 +44,9 @@ export class Article {
         type: "uuid"
     })
     userId: string
+
+    @OneToMany(() => ArticleTag, (articletag) => articletag.article)
+    articleTags: ArticleTag[]
 
     @CreateDateColumn()
     readonly createAt!: Date
