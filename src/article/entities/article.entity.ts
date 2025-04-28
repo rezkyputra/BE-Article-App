@@ -3,6 +3,7 @@ import { ArticleStatus } from "../interface/article.interface";
 import { Category } from "../../category/entities/category.entity";
 import { User } from "../../auth/entities/user.entity";
 import { ArticleTag } from "../../articletag/entities/articletag.entity";
+import { Comment } from "../../comment/entities/comment.entity";
 
 @Entity()
 export class Article {
@@ -47,6 +48,9 @@ export class Article {
 
     @OneToMany(() => ArticleTag, (articletag) => articletag.article)
     articleTags: ArticleTag[]
+
+    @OneToMany(() => Comment, (comment) => comment.article)
+    comments: Comment[]
 
     @CreateDateColumn()
     readonly createAt!: Date

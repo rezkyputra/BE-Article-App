@@ -23,6 +23,45 @@ export class ArticleService {
         private CloudinaryService: CloudinaryService,
     ) { }
 
+    async articlebyUser(userId: string, query: ArticleQueryDto) {
+        const {
+            title,
+            page = 1,
+            limit = 3,
+            sortBy = 'createdAt',
+            sortOrder = 'desc'
+        } = query
+
+        const skip = (page - 1) * limit
+
+        const qb = this.ArticleRepository.createQueryBuilder('article')
+            .innerJoinAndSelect('article.category', 'category')
+
+        // Searching
+        if (title) {
+            qb.andWhere('article.title LIKE :title', { title: `%${title}%` })
+        }
+
+        const [data, total] = await qb
+            .orderBy(`article.${sortBy}`, sortOrder.toUpperCase() as 'ASC' | 'DESC')
+            .skip(skip)
+            .take(limit)
+            .where({ userId })
+            .select([
+                'article',
+                'category.name'
+            ])
+            .getManyAndCount()
+
+        return {
+            data,
+            total,
+            page,
+            lastPage: Math.ceil(total / limit)
+        }
+
+    }
+
     async createArticle(userId: string, createArticleDto: createArticleDto, file?: Express.Multer.File): Promise<Article> {
         let image: string | undefined
 

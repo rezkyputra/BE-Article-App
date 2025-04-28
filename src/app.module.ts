@@ -10,6 +10,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { ProfileModule } from './profile/profile.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
+import { CommentModule } from './comment/comment.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -25,7 +26,8 @@ import { CloudinaryModule } from './cloudinary/cloudinary.module';
     AuthModule,
     UsersModule,
     ProfileModule,
-    CloudinaryModule],
+    CloudinaryModule,
+    CommentModule],
   controllers: [AppController],
   providers: [AppService],
 })
