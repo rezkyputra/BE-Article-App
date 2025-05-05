@@ -142,7 +142,14 @@ export class ArticleService {
         return await this.ArticleRepository.findOne(
             {
                 where: { id },
-                relations: ["category", 'user', 'articleTags', 'articleTags.tag'],
+                relations: [
+                    "category",
+                    'user',
+                    'articleTags',
+                    'articleTags.tag',
+                    'comments',
+                    'comments.user'
+                ],
                 select: {
                     category: {
                         id: true,
@@ -159,6 +166,16 @@ export class ArticleService {
                         tag: {
                             id: true,
                             name: true
+                        }
+                    },
+                    comments: {
+                        id: true,
+                        content: true,
+                        createdAt: true,
+                        updatedAt: true,
+                        user: {
+                            name: true,
+                            email: true
                         }
                     }
                 }
