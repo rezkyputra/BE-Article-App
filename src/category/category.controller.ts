@@ -8,6 +8,7 @@ import { AuthGuard } from '../auth/guard/auth.guard';
 import { RolesGuard } from '../auth/guard/role.guard';
 import { Roles } from '../auth/decolators/roles.decolator';
 import { Role } from '../auth/enum/role.enum';
+import { ApiBearerAuth, ApiBody } from '@nestjs/swagger';
 
 @Controller('category')
 export class CategoryController {
@@ -16,6 +17,10 @@ export class CategoryController {
   @UseGuards(AuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
   @Post()
+  @ApiBearerAuth()
+  @ApiBody({
+    type: CreateCategoryDto
+  })
   async create(@Body() createCategoryDto: CreateCategoryDto): Promise<Category> {
     return this.categoryService.create(createCategoryDto);
   }
@@ -34,6 +39,10 @@ export class CategoryController {
   @UseGuards(AuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
   @Put(':id')
+  @ApiBearerAuth()
+  @ApiBody({
+    type: CreateCategoryDto
+  })
   async update(@Param() params: FindOneParams, @Body() updateCategoryDto: UpdateCategoryDto): Promise<Category> {
     const category = await this.findOneOrFail(params.id)
     return this.categoryService.update(category, updateCategoryDto);
@@ -42,6 +51,7 @@ export class CategoryController {
   @UseGuards(AuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
   @Delete(':id')
+  @ApiBearerAuth()
   @HttpCode(HttpStatus.NO_CONTENT)
   async remove(@Param() params: FindOneParams) {
     const category = await this.findOneOrFail(params.id)
