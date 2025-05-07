@@ -14,7 +14,8 @@ import { CommentModule } from './comment/comment.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
-    isGlobal: true
+    isGlobal: true,
+    envFilePath: `.env.${process.env.NODE_ENV || 'development'}`
   }),
   TypeOrmModule.forRootAsync({
     imports: [ConfigModule],
