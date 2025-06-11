@@ -4,7 +4,7 @@ import { DataSource } from 'typeorm'
 config()
 
 export default new DataSource({
-    type: "postgres",
+    type: process.env.DB_TYPE as any,
     host: process.env.DB_HOST,
     port: parseInt(process.env.DB_PORT ?? '3306'),
     username: process.env.DB_USER,
