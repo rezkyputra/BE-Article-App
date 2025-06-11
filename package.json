@@ -21,7 +21,7 @@
     "typeorm": "typeorm-ts-node-commonjs",
     "migration:generate": "npm run build && npm run typeorm migration:generate -- -d typeorm.config.ts",
     "migration:run": "npm run build && npm run typeorm migration:run -- -d typeorm.config.ts",
-    "migration:generate:prod": "typeorm migration:generate -- -d dist/typeorm.config.ts src/migrations/InitDatabase",
+    "migration:generate:prod": "typeorm migration:generate -d dist/typeorm.config.ts dist/src/migrations/InitDatabase",
     "migration:run:prod": "typeorm migration:run -d dist/typeorm.config.js"
   },
   "dependencies": {
